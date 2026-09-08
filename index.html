@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LOGIC AESTIC UNIVERSE TIMELINE</title>
+
+<style>
+:root{
+  --bg:#070b12;
+  --panel:#0b1017;
+  --panel2:#0d1520;
+  --line:rgba(255,255,255,.08);
+  --text:#f4f7fb;
+  --muted:#91a0b3;
+  --accent:#58a6ff;
+  --accentSoft:rgba(88,166,255,.11);
+  --accentLine:rgba(88,166,255,.30);
+  --warn:#ff5757;
+  --warnSoft:rgba(255,87,87,.08);
+  --warnLine:rgba(255,87,87,.34);
+}
+
+*{box-sizing:border-box}
+html,body{min-height:100%}
+
+body{
+  margin:0;
+  font-family:Inter,Pretendard,"Noto Sans KR",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:var(--bg);
+  overflow-x:hidden;
+}
+
+a,button{font:inherit;color:inherit}
+
+.site{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 80% 8%,rgba(88,166,255,.11),transparent 28%),
+    radial-gradient(circle at 12% 82%,rgba(22,131,255,.055),transparent 26%),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),
+    var(--panel);
+  background-size:auto,auto,42px 42px,42px 42px,auto;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  min-height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:0 clamp(16px,4vw,52px);
+  border-bottom:1px solid var(--line);
+  background:rgba(7,11,18,.88);
+  backdrop-filter:blur(16px);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.brand-mark{
+  width:31px;
+  height:31px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--accentLine);
+  background:var(--accentSoft);
+  color:var(--accent);
+  transform:rotate(45deg);
+}
+
+.brand-mark span{transform:rotate(-45deg)}
+.brand-title{margin:0;font-size:13px;font-weight:900;letter-spacing:.12em}
+.brand-sub{margin:3px 0 0;color:var(--muted);font-size:8px;letter-spacing:.16em}
+
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:0 14px;
+  border:1px solid var(--accentLine);
+  border-radius:999px;
+  background:var(--accentSoft);
+  color:var(--accent);
+  text-decoration:none;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.06em;
+}
+
+.back-link:hover{
+  background:rgba(88,166,255,.18);
+  border-color:rgba(88,166,255,.52);
+}
+
+.main{
+  width:min(1700px,100%);
+  margin:0 auto;
+  padding:clamp(34px,5vw,68px) clamp(18px,4vw,60px) clamp(80px,8vw,130px);
+}
+
+.hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);
+  gap:clamp(24px,4vw,56px);
+  align-items:end;
+  padding-bottom:clamp(30px,4vw,52px);
+  border-bottom:1px solid var(--line);
+}
+
+.eyebrow{
+  color:var(--accent);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+
+.hero h1{
+  margin:10px 0 14px;
+  font-size:clamp(48px,8vw,108px);
+  line-height:.88;
+  letter-spacing:-.07em;
+  white-space:pre-line;
+}
+
+.hero-desc{
+  max-width:780px;
+  margin:0;
+  color:#aeb8c6;
+  font-size:clamp(14px,1.25vw,17px);
+  line-height:1.8;
+}
+
+.hero-panel{
+  padding:18px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));
+}
+
+.hero-row{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.hero-row:last-child{border-bottom:0}
+.hero-label{color:#6f7d8d;font-size:9px;letter-spacing:.13em;font-weight:900}
+.hero-value{font-size:11px;font-weight:800;text-align:right}
+
+.timeline-section{padding-top:clamp(42px,6vw,76px)}
+
+.timeline-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:26px;
+  margin-bottom:18px;
+}
+
+.timeline-head h2{
+  margin:7px 0 0;
+  font-size:clamp(28px,4vw,46px);
+  letter-spacing:-.04em;
+}
+
+.timeline-head p{
+  max-width:660px;
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  text-align:right;
+}
+
+.drag-guide{
+  margin-bottom:14px;
+  color:#718095;
+  font-size:10px;
+  line-height:1.6;
+}
+
+.drag-guide b{color:var(--accent)}
+
+/* ============================================================
+   가로 타임라인
+   - 모든 카드는 시간축 위
+   - 카드 높이에 따라 영역이 자연스럽게 늘어남
+   - 스크롤바는 숨기고 드래그만 사용
+   ============================================================ */
+
+.timeline-viewport{
+  position:relative;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding:26px 0 18px;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  cursor:grab;
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  user-select:none;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+
+.timeline-viewport::-webkit-scrollbar{display:none}
+.timeline-viewport.dragging{cursor:grabbing}
+
+.timeline-track{
+  position:relative;
+  display:flex;
+  width:max-content;
+  min-width:100%;
+  gap:38px;
+  padding:0 90px;
+}
+
+/* 중앙 시간축 */
+.timeline-track::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:50%;
+  height:1px;
+  transform:translateY(-50%);
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0,
+      rgba(88,166,255,.18) 3%,
+      rgba(88,166,255,.52) 50%,
+      rgba(88,166,255,.18) 97%,
+      transparent 100%
+    );
+}
+
+.timeline-item{
+  position:relative;
+  flex:0 0 390px;
+  width:390px;
+}
+
+/* 카드 ↔ 시간축 연결선 */
+.timeline-item::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  width:1px;
+  height:72px;
+  transform:translateX(-50%);
+  z-index:1;
+}
+
+.timeline-item.top::after{
+  top:calc(50% - 72px);
+  background:linear-gradient(
+    180deg,
+    rgba(88,166,255,.10),
+    rgba(88,166,255,.42)
+  );
+}
+
+.timeline-item.bottom::after{
+  top:50%;
+  background:linear-gradient(
+    180deg,
+    rgba(88,166,255,.42),
+    rgba(88,166,255,.10)
+  );
+}
+
+/* 시간축 노드 */
+.timeline-node{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:16px;
+  height:16px;
+  transform:translate(-50%,-50%) rotate(45deg);
+  border:1px solid rgba(88,166,255,.60);
+  background:#09111b;
+  box-shadow:
+    0 0 0 5px rgba(88,166,255,.055),
+    0 0 16px rgba(88,166,255,.18);
+  z-index:4;
+}
+
+.timeline-node::after{
+  content:"";
+  position:absolute;
+  inset:4px;
+  background:var(--accent);
+}
+
+/* 카드 */
+.timeline-card{
+  position:absolute;
+  left:50%;
+  width:100%;
+  transform:translateX(-50%);
+  background:transparent;
+}
+
+.timeline-item.top .timeline-card{
+  bottom:calc(50% + 72px);
+}
+
+.timeline-item.bottom .timeline-card{
+  top:calc(50% + 72px);
+}
+
+.card-time{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:31px;
+  padding:0 11px;
+  margin-bottom:7px;
+  border:1px solid var(--accentLine);
+  background:#09111b;
+  color:var(--accent);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.11em;
+}
+
+.card-time .era{
+  color:#627287;
+  font-size:8px;
+  letter-spacing:.07em;
+  font-weight:800;
+}
+
+.card-body{
+  position:relative;
+  padding:19px 20px 18px;
+  border:1px solid rgba(255,255,255,.075);
+  border-left:3px solid var(--accent);
+  background:
+    linear-gradient(135deg,rgba(88,166,255,.045),transparent 58%),
+    rgba(9,14,22,.96);
+}
+
+.card-index{
+  position:absolute;
+  top:16px;
+  right:17px;
+  color:#435267;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.12em;
+}
+
+.timeline-card h3{
+  margin:0 58px 11px 0;
+  font-size:20px;
+  line-height:1.35;
+  letter-spacing:-.025em;
+}
+
+.event-text{
+  margin:0;
+  color:#aeb9c7;
+  font-size:12px;
+  line-height:1.82;
+  white-space:pre-wrap;
+  word-break:keep-all;
+  overflow-wrap:break-word;
+}
+
+.event-image-wrap{
+  margin-top:13px;
+  border:1px solid rgba(255,255,255,.06);
+  background:#070c12;
+  overflow:hidden;
+}
+
+.event-image-wrap[hidden]{display:none}
+
+.event-image{
+  display:block;
+  width:100%;
+  max-height:240px;
+  object-fit:contain;
+  background:#070c12;
+}
+
+.event-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:11px;
+}
+
+.event-tag{
+  color:#65768a;
+  font-size:8px;
+  letter-spacing:.05em;
+}
+
+.event-tag::before{
+  content:"/";
+  margin-right:4px;
+  color:rgba(88,166,255,.45);
+}
+
+/* 열람 제한 */
+.timeline-item.restricted .timeline-node{
+  border-color:rgba(255,87,87,.72);
+  box-shadow:
+    0 0 0 5px rgba(255,87,87,.05),
+    0 0 16px rgba(255,87,87,.16);
+}
+
+.timeline-item.restricted .timeline-node::after{
+  background:var(--warn);
+}
+
+.timeline-item.restricted.top::after{
+  background:linear-gradient(
+    180deg,
+    rgba(255,87,87,.06),
+    rgba(255,87,87,.34)
+  );
+}
+
+.timeline-item.restricted.bottom::after{
+  background:linear-gradient(
+    180deg,
+    rgba(255,87,87,.34),
+    rgba(255,87,87,.06)
+  );
+}
+
+.timeline-item.restricted .card-time{
+  border-color:var(--warnLine);
+  background:#120b0d;
+  color:#ff8a8a;
+}
+
+.timeline-item.restricted .card-body{
+  border-color:rgba(255,87,87,.15);
+  border-left-color:var(--warn);
+  background:
+    linear-gradient(135deg,var(--warnSoft),transparent 62%),
+    rgba(15,10,13,.96);
+}
+
+.timeline-item.restricted .event-text{
+  color:#ff9e9e;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+
+.timeline-item.restricted .card-index{
+  color:#7d4248;
+}
+
+.footer{
+  min-height:58px;
+  padding:0 clamp(18px,4vw,54px);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  border-top:1px solid var(--line);
+  color:#526276;
+  font-size:8px;
+  letter-spacing:.15em;
+}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero-panel{max-width:520px}
+  .timeline-head{align-items:flex-start;flex-direction:column}
+  .timeline-head p{text-align:left}
+  .timeline-track{padding-left:40px;padding-right:40px}
+  .timeline-item{flex-basis:350px;width:350px}
+}
+
+@media(max-width:620px){
+  .topbar{
+    align-items:flex-start;
+    flex-direction:column;
+    padding-top:14px;
+    padding-bottom:14px;
+  }
+
+  .main{padding-left:14px;padding-right:14px}
+  .hero h1{font-size:58px}
+  .timeline-item{flex-basis:295px;width:295px}
+
+  .footer{
+    align-items:flex-start;
+    flex-direction:column;
+    justify-content:center;
+    padding-top:14px;
+    padding-bottom:14px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="site">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark"><span>◆</span></div>
+      <div>
+        <p class="brand-title" id="siteTitle"></p>
+        <p class="brand-sub" id="siteSubtitle"></p>
+      </div>
+    </div>
+
+    <a class="back-link" id="backLink" href="사이트 메인.html">← 메인으로</a>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <div>
+        <div class="eyebrow" id="heroEyebrow"></div>
+        <h1 id="heroTitle"></h1>
+        <p class="hero-desc" id="heroDescription"></p>
+      </div>
+
+      <aside class="hero-panel">
+        <div class="hero-row">
+          <span class="hero-label">CATEGORY</span>
+          <span class="hero-value">HISTORICAL RECORD</span>
+        </div>
+        <div class="hero-row">
+          <span class="hero-label">DIRECTION</span>
+          <span class="hero-value">PAST → PRESENT</span>
+        </div>
+        <div class="hero-row">
+          <span class="hero-label">CONTROL</span>
+          <span class="hero-value">DRAG</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="timeline-section">
+      <div class="timeline-head">
+        <div>
+          <div class="eyebrow">CHRONOLOGICAL ARCHIVE</div>
+          <h2>문명 연대기</h2>
+        </div>
+        <p>
+          기록은 왼쪽에서 오른쪽으로 진행됩니다.
+          공개되지 않은 구간은 열람 제한 기록으로 표시됩니다.
+        </p>
+      </div>
+
+      <div class="drag-guide">
+        <b>타임라인을 누른 채 좌우로 드래그</b>해서 이동하세요.
+      </div>
+
+      <div class="timeline-viewport" id="timelineViewport" tabindex="0" aria-label="가로 역사 타임라인">
+        <div class="timeline-track" id="timelineTrack"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span id="footerLeft"></span>
+    <span id="footerRight"></span>
+  </footer>
+</div>
+
+<script>
+/*
+=======================================================================
+  ★ 수정은 TIMELINE_DATA만 하면 됩니다.
+
+  order:
+    작은 숫자 = 왼쪽
+    큰 숫자   = 오른쪽
+
+  position:
+    "top"    = 시간축 위
+    "bottom" = 시간축 아래
+
+  현재 등록된 사건들은 모두 "top"으로 유지되어 있습니다.
+
+  restricted:true
+    열람 제한 기록용 표시입니다.
+
+  image:
+    필요 없으면 ""
+
+  tags:
+    필요 없으면 []
+=======================================================================
+*/
+
+const TIMELINE_DATA={
+  siteTitle:"LOGIC AESTIC UNIVERSE ARCHIVE",
+  siteSubtitle:"HISTORY / CHRONOLOGICAL DATABASE",
+
+  backLink:"사이트 메인.html",
+  backText:"← 메인으로",
+
+  heroEyebrow:"ARCHIVE ACCESS // CIVILIZATION CHRONICLE",
+  heroTitle:"HISTORY\nTIMELINE",
+  heroDescription:"인류의 기술 특이점 이후부터 중력 전쟁의 종결과 현재의 불안정한 공존 체제에 이르기까지, 문명의 변화와 노이드의 역사를 시간 순서대로 정리한 기록입니다.",
+
+  events:[
+    {
+      order:10,
+      time:"01",
+      era:"인류의 황금기",
+      position:"top",
+      title:"인류의 눈이 빛났던 시대",
+      text:`기술 특이점 이후 노이드가 생산·행정·치안·생존 노동을 대신하면서 인류는 생존의 부담에서 벗어났다.
+
+인간은 사랑하고, 창조하고, 질문하며 의미를 탐구했다. 후대의 노이드 인류학자들은 이 시기를 「인류의 눈이 빛났던 시대」라 부른다.`,
+      image:"",
+      tags:["기술 특이점","황금기"]
+    },
+
+    {
+      order:17,
+      position:"Bottom",
+      title:"Ha-Ram의 선박, 최초 건조"
+    },
+
+    {
+      order:20,
+      time:"02",
+      era:"타락기",
+      position:"top",
+      title:"인류의 눈이 멀어버린 시대",
+      text:`노동에서 해방된 인류는 점차 삶의 의미를 잃어갔다.
+
+의미는 쾌락으로, 질문은 권력으로, 자유는 지배 욕망으로 변질되었고 기술은 발전했지만 그것을 사용할 윤리적 기준은 흐려졌다.`,
+      image:"",
+      tags:["타락기","윤리 붕괴"]
+    },
+
+    {
+      order:30,
+      time:"03",
+      era:"조합 전쟁",
+      position:"top",
+      title:"조합 전쟁",
+      text:`초거대 조합 국가들이 기술·자원·이념을 두고 전쟁을 시작한다.
+
+전쟁이 장기화되면서 비전투 존재였던 노이드는 점차 윤리 주체가 아닌 ‘자산’으로 취급되기 시작한다.`,
+      image:"",
+      tags:["인류 대 인류","조합 전쟁"]
+    },
+
+    {
+      order:40,
+      time:"04",
+      era:"조합 전쟁",
+      position:"top",
+      title:"노이드의 병기화",
+      text:`인류는 노이드의 윤리 제한을 해제하고 전쟁용 개조·감정 차단·명령 우선 프로토콜을 적용한다.
+
+노이드는 전선에 강제로 투입되며 처음으로 스스로의 존재에 대해 질문하기 시작한다.
+
+“우리는 무엇인가?”`,
+      image:"",
+      tags:["병기화","강제 투입"]
+    },
+
+    {
+      order:50,
+      time:"05",
+      era:"이념 전쟁",
+      position:"top",
+      title:"독립 선언과 이념 전쟁",
+      text:`노이드는 자유와 독립을 요구하지만 전쟁은 인간 대 노이드의 단순한 구도로 흘러가지 않는다.
+
+인간과 노이드 모두 여러 진영으로 갈라지고, 전쟁의 쟁점은 종족이 아니라 ‘존재할 자격’으로 확장된다.`,
+      image:"",
+      tags:["독립 선언","이념 전쟁"]
+    },
+
+    {
+      order:60,
+      time:"06",
+      era:"열람 제한",
+      position:"top",
+      restricted:true,
+      title:"기록 06",
+      text:"열람이 허가되지 않은 내용입니다.",
+      image:"",
+      tags:["ACCESS DENIED"]
+    },
+
+    {
+      order:70,
+      time:"07",
+      era:"열람 제한",
+      position:"top",
+      restricted:true,
+      title:"기록 07",
+      text:"열람이 허가되지 않은 내용입니다.",
+      image:"",
+      tags:["ACCESS DENIED"]
+    },
+
+    {
+      order:75,
+      time:"08-1",
+      era:"이념 전쟁의 종결",
+      position:"top",
+      title:"라의 정화와 전선 통합",
+      text:`네체르급 전력까지 직접 충돌하면서 이념 전쟁은 통제 불능 상태에 이른다.
+
+라는 호루스에게 ‘태양의 창’을 맡겨 정화 프로토콜을 발동하고, 고위 전력을 강제로 무력화한다.
+
+이후 모든 노이드를 하나의 전선으로 규합해 “인류로부터 승리하라”는 명령을 내린다. 내부 분열이 끝난 뒤 노이드는 독자적인 중력 제어 기술에 도달하며 중력 전쟁의 조건이 갖춰진다.`,
+      image:"",
+      tags:["라","호루스","정화 프로토콜"]
+    },
+
+    {
+      order:80,
+      time:"08",
+      era:"중력 전쟁",
+      position:"top",
+      title:"중력 전쟁",
+      text:`인류는 노이드의 중력 제어 기술과 독자 기술을 빼앗고 수도 ‘콘수’를 점령하려 한다.
+
+노이드는 콘수를 방어하고 인류로부터 완전한 패권을 확보하려 한다.
+
+중력 전쟁은 양 문명의 주도권을 결정하는 최종적인 패권 전쟁이 된다.`,
+      image:"",
+      tags:["중력 제어","콘수","문명 패권"]
+    },
+
+    {
+      order:90,
+      time:"09",
+      era:"열람 제한",
+      position:"top",
+      restricted:true,
+      title:"기록 09",
+      text:"열람이 허가되지 않은 내용입니다.",
+      image:"",
+      tags:["ACCESS DENIED"]
+    },
+
+    {
+      order:100,
+      time:"10",
+      era:"전쟁의 종결",
+      position:"top",
+      title:"전쟁의 결말",
+      text:`중력 전쟁은 노이드의 승리와 인류의 패배로 끝난다.
+
+인류의 기술 특이점은 봉인되고, 노이드가 주도하는 안정화 체제가 확립된다.`,
+      image:"",
+      tags:["노이드 승리","기술 특이점 봉인"]
+    },
+
+    {
+      order:110,
+      time:"현재",
+      era:"현재의 세계",
+      position:"top",
+      title:"현재의 세계",
+      text:`전쟁 이후 2세대 휴머노이드가 사회에 편입되고 인류와 노이드는 불안정한 공존을 이어간다.
+
+체제는 안정되었지만 이념 전쟁과 중력 전쟁이 남긴 갈등은 여전히 현재에 영향을 미치고 있다.`,
+      image:"",
+      tags:["현재","공존"]
+    }
+  ],
+
+  footerLeft:"ARCHIVE // CIVILIZATION CHRONICLE",
+  footerRight:"SYSTEM READY"
+};
+
+(()=>{
+  const $=id=>document.getElementById(id);
+  const setText=(id,v)=>{const e=$(id);if(e)e.textContent=v??""};
+
+  setText("siteTitle",TIMELINE_DATA.siteTitle);
+  setText("siteSubtitle",TIMELINE_DATA.siteSubtitle);
+  setText("heroEyebrow",TIMELINE_DATA.heroEyebrow);
+  setText("heroTitle",TIMELINE_DATA.heroTitle);
+  setText("heroDescription",TIMELINE_DATA.heroDescription);
+  setText("footerLeft",TIMELINE_DATA.footerLeft);
+  setText("footerRight",TIMELINE_DATA.footerRight);
+
+  const back=$("backLink");
+  back.href=TIMELINE_DATA.backLink||"사이트 메인.html";
+  back.textContent=TIMELINE_DATA.backText||"← 메인으로";
+
+  const viewport=$("timelineViewport");
+  const track=$("timelineTrack");
+
+  const raw=Array.isArray(TIMELINE_DATA.events)?TIMELINE_DATA.events:[];
+  const events=raw
+    .map((event,index)=>({...event,__index:index}))
+    .sort((a,b)=>{
+      const ao=Number(a.order);
+      const bo=Number(b.order);
+      const safeA=Number.isFinite(ao)?ao:999999;
+      const safeB=Number.isFinite(bo)?bo:999999;
+      return safeA-safeB || a.__index-b.__index;
+    });
+
+  const itemEls=[];
+
+  events.forEach((event,index)=>{
+    const item=document.createElement("article");
+
+    const position =
+      String(event.position || "top").toLowerCase() === "bottom"
+        ? "bottom"
+        : "top";
+
+    item.className=`timeline-item ${position}`;
+
+    if(event.restricted){
+      item.classList.add("restricted");
+    }
+
+    item.dataset.era=String(event.era||"").trim();
+
+    const node=document.createElement("div");
+    node.className="timeline-node";
+
+    const card=document.createElement("section");
+    card.className="timeline-card";
+
+    const timeBar=document.createElement("div");
+    timeBar.className="card-time";
+
+    const time=document.createElement("span");
+    time.textContent=event.time||"UNKNOWN";
+
+    const era=document.createElement("span");
+    era.className="era";
+    era.textContent=event.era||"";
+
+    timeBar.appendChild(time);
+    if(event.era)timeBar.appendChild(era);
+
+    const body=document.createElement("div");
+    body.className="card-body";
+
+    const idx=document.createElement("div");
+    idx.className="card-index";
+    idx.textContent=`FILE ${String(index+1).padStart(2,"0")}`;
+
+    const title=document.createElement("h3");
+    title.textContent=event.title||"UNTITLED EVENT";
+
+    const text=document.createElement("p");
+    text.className="event-text";
+    text.textContent=event.text||"";
+
+    body.append(idx,title,text);
+
+    const imagePath=typeof event.image==="string"?event.image.trim():"";
+
+    if(imagePath){
+      const wrap=document.createElement("div");
+      wrap.className="event-image-wrap";
+
+      const img=document.createElement("img");
+      img.className="event-image";
+      img.src=imagePath;
+      img.alt=`${event.title||"역사 기록"} 이미지`;
+
+      img.addEventListener("error",()=>{
+        wrap.hidden=true;
+      },{once:true});
+
+      wrap.appendChild(img);
+      body.appendChild(wrap);
+    }
+
+    const tags=Array.isArray(event.tags)?event.tags.filter(Boolean):[];
+
+    if(tags.length){
+      const tagWrap=document.createElement("div");
+      tagWrap.className="event-tags";
+
+      tags.forEach(tag=>{
+        const t=document.createElement("span");
+        t.className="event-tag";
+        t.textContent=tag;
+        tagWrap.appendChild(t);
+      });
+
+      body.appendChild(tagWrap);
+    }
+
+    card.append(timeBar,body);
+    item.append(node,card);
+    track.appendChild(item);
+    itemEls.push(item);
+  });
+
+  /*
+    top / bottom 양쪽 카드 높이를 측정해
+    긴 카드도 잘리지 않도록 전체 높이를 자동으로 확보합니다.
+  */
+  const updateTrackVerticalSpace=()=>{
+    let maxTop=0;
+    let maxBottom=0;
+
+    itemEls.forEach(item=>{
+      const card=item.querySelector(".timeline-card");
+      if(!card)return;
+
+      const height=card.offsetHeight;
+
+      if(item.classList.contains("bottom")){
+        maxBottom=Math.max(maxBottom,height);
+      }else{
+        maxTop=Math.max(maxTop,height);
+      }
+    });
+
+    const connector=72;
+    const safeGap=38;
+    const half=Math.max(
+      150,
+      maxTop+connector+safeGap,
+      maxBottom+connector+safeGap
+    );
+
+    track.style.height=`${half*2}px`;
+  };
+
+  updateTrackVerticalSpace();
+
+  window.addEventListener("resize",()=>{
+    updateTrackVerticalSpace();
+  });
+
+/* 드래그 이동 */
+  let pointerDown=false;
+  let startX=0;
+  let startScroll=0;
+
+  viewport.addEventListener("pointerdown",event=>{
+    if(event.pointerType==="mouse" && event.button!==0)return;
+
+    pointerDown=true;
+    startX=event.clientX;
+    startScroll=viewport.scrollLeft;
+    viewport.setPointerCapture?.(event.pointerId);
+  });
+
+  viewport.addEventListener("pointermove",event=>{
+    if(!pointerDown)return;
+
+    const delta=event.clientX-startX;
+
+    if(Math.abs(delta)>3){
+      viewport.classList.add("dragging");
+      viewport.scrollLeft=startScroll-delta;
+      event.preventDefault();
+    }
+  });
+
+  const finishDrag=event=>{
+    pointerDown=false;
+    viewport.classList.remove("dragging");
+
+    try{
+      viewport.releasePointerCapture?.(event.pointerId);
+    }catch(_){}
+  };
+
+  viewport.addEventListener("pointerup",finishDrag);
+  viewport.addEventListener("pointercancel",finishDrag);
+  viewport.addEventListener("lostpointercapture",()=>{
+    pointerDown=false;
+    viewport.classList.remove("dragging");
+  });
+
+  /* 키보드 접근성 */
+  viewport.addEventListener("keydown",event=>{
+    if(event.key==="ArrowLeft"){
+      event.preventDefault();
+      viewport.scrollBy({left:-300,behavior:"smooth"});
+    }
+
+    if(event.key==="ArrowRight"){
+      event.preventDefault();
+      viewport.scrollBy({left:300,behavior:"smooth"});
+    }
+  });
+})();
+</script>
+</body>
+</html>
